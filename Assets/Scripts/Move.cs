@@ -41,40 +41,18 @@ public class Move : MonoBehaviour {
 	//Al momento de presionar el botón de mouse.
 	//Registra la posición inicial del click.
 	//Manda activar el RayCast.
-/*#if UNITY_EDITOR
-	void OnMouseDown(){
-		OnTouchDown ();
-	}
 
-	void OnMouseUp(){
-		OnTouchUp ();
-	}
-#endif*/
 	void OnMouseDown()
 	{
 		mouseinix = Input.mousePosition.x;
 		mouseiniy = Input.mousePosition.y;
-/*
-		for (int i = 0; i < Input.touchCount; ++i) {		
-						if (Input.GetTouch (i).phase == TouchPhase.Began) {
-								mouseinix = Input.GetTouch (i).position.x;
-								mouseiniy = Input.GetTouch (i).position.y;
-						}
-				}*/
 	}	
 	
 	//Al soltar el botón.		 
 	void OnMouseUp()
 	{
-		if(gameObject.tag == "GemaQuieta"){
-			/*for (int i = 0; i < Input.touchCount; ++i) {		
-				if (Input.GetTouch (i).phase == TouchPhase.Ended) {
-					mousefinx = Input.GetTouch(i).position.x;
-					mousefiny = Input.GetTouch(i).position.y;
-				}
-			}	*/
-
-
+		if(gameObject.tag == "GemaQuieta")
+        {
 				mousefinx = Input.mousePosition.x;
 				mousefiny = Input.mousePosition.y;
 				
@@ -137,33 +115,34 @@ public class Move : MonoBehaviour {
 		Debug.DrawRay(transform.position, new Vector3(1,0,-1), Color.red);
 		Debug.DrawRay(transform.position, new Vector3(-1,0,-1), Color.red);
 
-		if (!unMovimiento) {
+		if (!unMovimiento) 
+        {
 						if (Physics.Raycast (transform.position, -Vector3.back, out hit, distancia)) {
-								if ((hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Arriba") { 
+								if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Arriba") { 
 										gameObject.tag = "GemaQuieta";
-								}
-								if (hit.collider.gameObject.name == "Enemigo") {
-
 								}
 						}
 		
 						if (Physics.Raycast (transform.position, Vector3.back, out hit, distancia)) {
-								if ((hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Abajo") { 
+                            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Abajo")
+                            { 
 										gameObject.tag = "GemaQuieta";
 								}
 						}
 		
 						if (Physics.Raycast (transform.position, Vector3.left, out hit, distancia)) {
-								if ((hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Izquierda") { 
-										gameObject.tag = "GemaQuieta";
-								}
-						}
-		
-						if (Physics.Raycast (transform.position, Vector3.right, out hit, distancia)) {
-								if ((hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Derecha") { 
+                            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Izquierda")
+                            { 
 										gameObject.tag = "GemaQuieta";
 								}
 
+						}
+		
+						if (Physics.Raycast (transform.position, Vector3.right, out hit, distancia)) {
+                            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Derecha")
+                            { 
+										gameObject.tag = "GemaQuieta";
+								}
 						}
 
 				}
@@ -173,8 +152,8 @@ public class Move : MonoBehaviour {
 			if (Physics.Raycast (transform.position, new Vector3 (1, 0, 1), out hit, d)) {
 				if (hit.collider.gameObject.tag == "Cuadricula") {
 					Debug.Log(hit.collider.name);
-					hit.collider.tag = "GemaEnMovimiento"
-						;					//hit.collider.gameObject.renderer.enabled = true;
+					hit.collider.tag = "GemaEnMovimiento";					
+                    //hit.collider.gameObject.renderer.enabled = true;
 					//hit.collider.BroadcastMessage("Objeto",this.gameObject,SendMessageOptions.RequireReceiver);
 					//hit.collider.BroadcastMessage("UnMovimiento",this.gameObject,SendMessageOptions.RequireReceiver);
 				}

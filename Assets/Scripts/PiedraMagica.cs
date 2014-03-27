@@ -3,42 +3,120 @@ using System.Collections;
 
 public class PiedraMagica : MonoBehaviour {
 	private GameObject[] gemas;
-	private int cont;
+	private int contCruz;
+    private int contRadial;
 	private string validation;
-	private string pocion;
     private RaycastHit hit;
+    private string estado;
+
 
 	void Start () 
     {
-        pocion = "Nada";
-        cont = 0;
+        estado = "Inactivo";
+        contCruz = 0;
+        contRadial = 0;
+
 	}
 	
 	void Update () 
     {
-        
+        RaycastingRadial(hit, 6, "Piedra");
 	}
 
     void OnMouseDown() 
     {
-        GameObject[] gemasEnMovimiento = GameObject.FindGameObjectsWithTag("GemaEnMovimiento");
-        if (gemasEnMovimiento.Length <= 0) 
+        if (estado == "Inactivo")
+        {
+            GameObject[] gemasEnMovimiento = GameObject.FindGameObjectsWithTag("GemaEnMovimiento");
+            if (gemasEnMovimiento.Length <= 0)
+            {
+                GameObject[] gemasConRoca = RaycastingEnCruz(hit, 6, "GemaQuieta");
+                if (contCruz > 0)
+                {
+                    for (int i = 0; i < contCruz; i++)
+                    {
+                        gemasConRoca[i].transform.parent = this.gameObject.transform;
+                        
+                    }
+                    
+        
+                    StartCoroutine(Yeild());
+
+                }
+            }
+        } 
+    }
+
+
+    private void RaycastingRadial(RaycastHit hit, int distancia, string choqueCon)
+    {
+        Debug.DrawRay(transform.position, -Vector3.back, Color.green);
+        Debug.DrawRay(transform.position, Vector3.back, Color.green);
+        Debug.DrawRay(transform.position, Vector3.right, Color.green);
+        Debug.DrawRay(transform.position, Vector3.left, Color.green);
+        Debug.DrawRay(transform.position, new Vector3(1, 0, 1), Color.red);
+        Debug.DrawRay(transform.position, new Vector3(-1, 0, 1), Color.red);
+        Debug.DrawRay(transform.position, new Vector3(1, 0, -1), Color.red);
+        Debug.DrawRay(transform.position, new Vector3(-1, 0, -1), Color.red);
+        GameObject[] objetos = new GameObject[8];
+        
+
+        if (Physics.Raycast(transform.position, -Vector3.back, out hit, distancia))
         {
             
-            GameObject[] gemasConRoca = RaycastingEnCruz(hit, 6, "GemaQuieta");
-            if (cont > 0)
+               // objetos[contRadial] = hit.collider.gameObject;
+               // contRadial++;
+                Debug.Log(hit.collider.gameObject.tag);
+            
+            if (Physics.Raycast(transform.position, Vector3.back, out hit, distancia))
             {
-                Debug.Log("ffff");
-                for (int i = 0; i < cont; i++)
-                    gemasConRoca[i].transform.parent = this.gameObject.transform;
+                
+                    Debug.Log(hit.collider.gameObject.tag);
+                
+            }
+            if (Physics.Raycast(transform.position, Vector3.left, out hit, distancia))
+            {
+                
+                    Debug.Log(hit.collider.gameObject.tag);
+                
+            }
+            if (Physics.Raycast(transform.position, Vector3.right, out hit, distancia))
+            {
+                
+                    Debug.Log(hit.collider.gameObject.tag);
+                
+            }
 
-                StartCoroutine(Yeild());
+            if (Physics.Raycast(transform.position, new Vector3(1,0,1), out hit, distancia))
+            {
+                
+                    Debug.Log(hit.collider.gameObject.tag);
+                
+            }
 
+            if (Physics.Raycast(transform.position, new Vector3(1, 0, -1), out hit, distancia))
+            {
+                
+                    Debug.Log(hit.collider.gameObject.tag);
+                
+            }
+
+            if (Physics.Raycast(transform.position, new Vector3(-1, 0, 1), out hit, distancia))
+            {
+                
+                    Debug.Log(hit.collider.gameObject.tag);
+                
+            }
+
+            if (Physics.Raycast(transform.position, new Vector3(-1, 0, -1), out hit, distancia))
+            {
+                
+                    Debug.Log(hit.collider.gameObject.tag);
                 
             }
         }
+       // return objetos;
     }
-
 
     private GameObject[] RaycastingEnCruz(RaycastHit hit, int distancia, string choqueCon)
     {
@@ -46,6 +124,7 @@ public class PiedraMagica : MonoBehaviour {
         Debug.DrawRay(transform.position, Vector3.back, Color.green);
         Debug.DrawRay(transform.position, Vector3.right, Color.green);
         Debug.DrawRay(transform.position, Vector3.left, Color.green);
+
         GameObject[] objetos = new GameObject[4];
 
 
@@ -53,40 +132,50 @@ public class PiedraMagica : MonoBehaviour {
         {
             if (hit.collider.gameObject.tag == choqueCon)
             {
-                objetos[cont] = hit.collider.gameObject;
-                cont++;
+                objetos[contCruz] = hit.collider.gameObject;
+                contCruz++;
             }
             if (Physics.Raycast(transform.position, Vector3.back, out hit, distancia))
             {
-                objetos[cont] = hit.collider.gameObject;
-                cont++;
+                if (hit.collider.gameObject.tag == choqueCon)
+                {
+                    objetos[contCruz] = hit.collider.gameObject;
+                    contCruz++;
+                }
             }
             if (Physics.Raycast(transform.position, Vector3.left, out hit, distancia))
             {
-                objetos[cont] = hit.collider.gameObject;
-                cont++;
+                if (hit.collider.gameObject.tag == choqueCon)
+                {
+                    objetos[contCruz] = hit.collider.gameObject;
+                    contCruz++;
+                }
             }
             if (Physics.Raycast(transform.position, Vector3.right, out hit, distancia))
             {
-                objetos[cont] = hit.collider.gameObject;
-                cont++;
+                if (hit.collider.gameObject.tag == choqueCon)
+                {
+                    objetos[contCruz] = hit.collider.gameObject;
+                    contCruz++;
+                }
             }
         }
         return objetos;
     }
 
-
     private IEnumerator Yeild()
     {
+        estado = "Activo";
         for (int i = 0; i < 90; i++)
         {
-            yield return new WaitForSeconds(.00000001f);
+            if(i % 2 == 0) yield return new WaitForSeconds(.01f);
             transform.Rotate(Vector3.back, 1f);
         }
-        cont = 0;
+        contCruz = 0;
         GameObject[] gemasConRoca = RaycastingEnCruz(hit, 6, "GemaQuieta");
-        for (int i = 0; i < cont; i++)
+        for (int i = 0; i < contCruz; i++)
             gemasConRoca[i].transform.parent = null;
-        cont = 0;  
+        contCruz = 0;
+        estado = "Inactivo";
     }
 }

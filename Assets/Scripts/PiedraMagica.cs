@@ -4,134 +4,89 @@ using System.Collections;
 public class PiedraMagica : MonoBehaviour {
 	private GameObject[] gemas;
 	private int cont;
-	private RaycastHit hit;
 	private string validation;
 	private string pocion;
+    private RaycastHit hit;
 
-
-	void Start () {
-		cont = 0;
-		pocion = "Nada";
+	void Start () 
+    {
+        pocion = "Nada";
+        cont = 0;
 	}
 	
-	void Update () {
-
-
-	}
-	/*
-	#if UNITY_EDITOR
-	void OnMouseDown(){
-		OnTouchDown ();
-	}
-	#endif
-*/
-	void OnMousehDown(){
-
-		if (pocion == "Eliminar"){
-			GameObject[] piedras = GameObject.FindGameObjectsWithTag ("GemaEnMovimiento");
-			for (int i = 0; i < piedras.Length; i++){
-				piedras[i].BroadcastMessage("Eliminar","Nada", SendMessageOptions.RequireReceiver);
-				piedras[i].gameObject.tag = "Piedra";	
-			}
-			Destroy (this.gameObject);
-		}
-	
-
-
-		GameObject[] ok = GameObject.FindGameObjectsWithTag ("GemaEnMovimiento");
-		if (this.gameObject.tag == "Pared" && ok.Length == 0) {
-			this.gameObject.tag = "GemaEnMovimiento";
-			Raycasting ();
-			if (validation == "Adelante") {
-				for (int i = 0; i < cont; i++) 
-						gemas [i].transform.parent = this.gameObject.transform; 	
-				StartCoroutine (Yeild ());
-				validation = "Nada";
-			}
-		}
+	void Update () 
+    {
+        
 	}
 
+    void OnMouseDown() 
+    {
+        GameObject[] gemasEnMovimiento = GameObject.FindGameObjectsWithTag("GemaEnMovimiento");
+        if (gemasEnMovimiento.Length <= 0) 
+        {
+            
+            GameObject[] gemasConRoca = RaycastingEnCruz(hit, 6, "GemaQuieta");
+            if (cont > 0)
+            {
+                Debug.Log("ffff");
+                for (int i = 0; i < cont; i++)
+                    gemasConRoca[i].transform.parent = this.gameObject.transform;
 
-	void OnCollisionEnter(Collision other){
-		if (other.gameObject.tag == "Pared") {
-			rigidbody.constraints = RigidbodyConstraints.FreezePosition;
-		}
-	}
+                StartCoroutine(Yeild());
+
+                
+            }
+        }
+    }
 
 
-	IEnumerator Yeild(){
-		validation = "Quieto";
-		for (int i = 0; i<90; i++) {
-			yield return new WaitForSeconds (.00000001f);
-			transform.Rotate (Vector3.back, 1f);
-		}
-		for (int i = 0; i < cont; i++) {
-			gemas[i].transform.parent = null; 	
-		}
-		cont = 0;
-		this.gameObject.tag = "Pared";
-	}
+    private GameObject[] RaycastingEnCruz(RaycastHit hit, int distancia, string choqueCon)
+    {
+        Debug.DrawRay(transform.position, -Vector3.back, Color.green);
+        Debug.DrawRay(transform.position, Vector3.back, Color.green);
+        Debug.DrawRay(transform.position, Vector3.right, Color.green);
+        Debug.DrawRay(transform.position, Vector3.left, Color.green);
+        GameObject[] objetos = new GameObject[4];
 
-	void Raycasting(){
-		Debug.DrawRay (transform.position, -Vector3.back, Color.green);
-		Debug.DrawRay (transform.position, Vector3.back, Color.green);
-		Debug.DrawRay (transform.position, Vector3.right, Color.green);
-		Debug.DrawRay (transform.position, Vector3.left, Color.green);
-		gemas = new GameObject[4];
-		if (Physics.Raycast (transform.position, -Vector3.back, out hit, 1)) {
-				
-			if (hit.collider.gameObject.tag == "GemaQuieta") {
-				gemas [cont] = hit.collider.gameObject;
-				cont++;
-				validation = "Adelante";
-			}
-			if(hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "Piedra")
-			{
-				this.gameObject.tag = "PiedraBloqueada";
-			}
-		}
-		if (Physics.Raycast (transform.position, Vector3.back, out hit,1)) {
-			if (hit.collider.gameObject.tag == "GemaQuieta") {
-				gemas [cont] = hit.collider.gameObject;
-				cont++;
-				validation = "Adelante";
-			}
-			if(hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "Piedra")
-			{
-				this.gameObject.tag = "PiedraBloqueada";
-			}
-		}
-		if (Physics.Raycast (transform.position, Vector3.left, out hit,1)) {
-				
-			if (hit.collider.gameObject.tag == "GemaQuieta") {
-				gemas [cont] = hit.collider.gameObject;
-				cont++;
-				validation = "Adelante";
-			}
-			if(hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "Piedra")
-			{
-				this.gameObject.tag = "PiedraBloqueada";
-			}
-		}
-		if (Physics.Raycast (transform.position, Vector3.right, out hit,1)) {
-				
-			if (hit.collider.gameObject.tag == "GemaQuieta") {
-				gemas [cont] = hit.collider.gameObject;
-				cont++;
-				validation = "Adelante";
-			}
-			if(hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "Piedra")
-			{
-				this.gameObject.tag = "PiedraBloqueada";
-			}
-		}
-	}
 
-/********************************************************************************************************************/
-	//
-	//
+        if (Physics.Raycast(transform.position, -Vector3.back, out hit, distancia))
+        {
+            if (hit.collider.gameObject.tag == choqueCon)
+            {
+                objetos[cont] = hit.collider.gameObject;
+                cont++;
+            }
+            if (Physics.Raycast(transform.position, Vector3.back, out hit, distancia))
+            {
+                objetos[cont] = hit.collider.gameObject;
+                cont++;
+            }
+            if (Physics.Raycast(transform.position, Vector3.left, out hit, distancia))
+            {
+                objetos[cont] = hit.collider.gameObject;
+                cont++;
+            }
+            if (Physics.Raycast(transform.position, Vector3.right, out hit, distancia))
+            {
+                objetos[cont] = hit.collider.gameObject;
+                cont++;
+            }
+        }
+        return objetos;
+    }
 
-	void Eliminar(string x){
-		pocion = x;
-	}
+
+    private IEnumerator Yeild()
+    {
+        for (int i = 0; i < 90; i++)
+        {
+            yield return new WaitForSeconds(.00000001f);
+            transform.Rotate(Vector3.back, 1f);
+        }
+        cont = 0;
+        GameObject[] gemasConRoca = RaycastingEnCruz(hit, 6, "GemaQuieta");
+        for (int i = 0; i < cont; i++)
+            gemasConRoca[i].transform.parent = null;
+        cont = 0;  
+    }
 }

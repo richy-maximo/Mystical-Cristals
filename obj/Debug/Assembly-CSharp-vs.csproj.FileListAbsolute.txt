@@ -1,0 +1,11 @@
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\Temp\bin\Debug\UnityEditor.dll
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\Temp\bin\Debug\UnityEngine.dll
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\Temp\bin\Debug\Mono.Cecil.dll
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\Temp\bin\Debug\nunit.framework.dll
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\Temp\bin\Debug\Unity.DataContract.dll
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\obj\Debug\Assembly-CSharp.dll
+C:\Users\Programacion\Google Drive\Elyon\Mystical Cristals\obj\Debug\Assembly-CSharp.pdb

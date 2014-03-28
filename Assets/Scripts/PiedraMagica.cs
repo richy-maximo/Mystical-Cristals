@@ -10,19 +10,47 @@ public class PiedraMagica : MonoBehaviour {
     private string estado;
 
 
+    public int dis;
+
 	void Start () 
     {
         estado = "Inactivo";
         contCruz = 0;
         contRadial = 0;
-
+        dis = 0;
 	}
 	
 	void Update () 
     {
-        RaycastingRadial(hit, 6, "Piedra");
+        radar();
 	}
 
+    private void radar() 
+    {
+        /*GameObject[] cuadricula = GameObject.FindGameObjectsWithTag("Cuadricula");
+        for (int i = 0; i < cuadricula.Length; i++) 
+        {
+            Vector3 diferenciax = Vector3.Distance(cuadricula[i].transform.position, this.gameObject.transform.position);
+            if (cuadricula[i].name == "ZE3")
+                Debug.Log(diferenciax);
+           
+                cuadricula[i].renderer.enabled = true;
+            
+        }*/
+
+        Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.transform.position, dis);
+
+        for (int i = 0; i < hitColliders.Length; i++) 
+        {
+            if (hitColliders[i].tag == "Cuadricula")
+            {
+                hitColliders[i].BroadcastMessage("Pocion", "Rotacion", SendMessageOptions.RequireReceiver);
+            }
+
+
+        }
+    }
+    
     void OnMouseDown() 
     {
         if (estado == "Inactivo")
@@ -177,5 +205,6 @@ public class PiedraMagica : MonoBehaviour {
             gemasConRoca[i].transform.parent = null;
         contCruz = 0;
         estado = "Inactivo";
+   
     }
 }

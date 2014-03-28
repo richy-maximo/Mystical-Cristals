@@ -28,6 +28,11 @@ public class Cuadricula : MonoBehaviour {
 			}
 		}
 
+        if (pocion == "Rotacion") 
+        {
+            this.gameObject.renderer.enabled = true;
+        }
+
 
 
 		//Debug.Log (this.gameObject.name + pocion);

@@ -47,17 +47,18 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts Antiguos\Buttons.cs" />
-     <Compile Include="Assets\Scripts Antiguos\Cerebro.cs" />
      <Compile Include="Assets\Scripts Antiguos\Cuadriculas.cs" />
      <Compile Include="Assets\Scripts Antiguos\Enemigo.cs" />
      <Compile Include="Assets\Scripts Antiguos\Move.cs" />
      <Compile Include="Assets\Scripts Antiguos\Piedra.cs" />
-     <Compile Include="Assets\Scripts Antiguos\PiedraMagica.cs" />
      <Compile Include="Assets\Scripts Antiguos\SphereCast.cs" />
      <Compile Include="Assets\Scripts Antiguos\UtilidadesHagi.cs" />
      <Compile Include="Assets\Scripts\Brain.cs" />
+     <Compile Include="Assets\Scripts\Buttons.cs" />
+     <Compile Include="Assets\Scripts\Cerebro.cs" />
      <Compile Include="Assets\Scripts\Cuadricula.cs" />
      <Compile Include="Assets\Scripts\Gema.cs" />
+     <Compile Include="Assets\Scripts\PiedraMagica.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

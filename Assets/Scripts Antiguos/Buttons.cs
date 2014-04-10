@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Buttons : MonoBehaviour {
+public class Buttonss : MonoBehaviour {
 	private int unidadTeletransportador;
 	private int unidadRotacion;
 	private int unidadTiempo;

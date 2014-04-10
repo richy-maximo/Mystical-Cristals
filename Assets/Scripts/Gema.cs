@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Gema : MonoBehaviour {
     //Cerebro.
-    public Brain brain;
 
     // Variables para movimiento.
     private float mouseinix;
@@ -20,8 +19,10 @@ public class Gema : MonoBehaviour {
     public float distancia;
 
     //Variables de estado.
-    private string pocion;
+    public string pocion;
 
+    //Variable para OverlapSphere
+    public float distanciaEsfera;
 
 
 
@@ -29,25 +30,33 @@ public class Gema : MonoBehaviour {
         pocion = "Nada";
 	}
 	
-	void Update () {
-        Raycasting();
-        if (gameObject.tag == "GemaQuieta")
-            rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        if (direccion == "Arriba")
-            rigidbody.velocity = new Vector3(0, 0, velocity);
-        if (direccion == "Abajo")
-            rigidbody.velocity = new Vector3(0, 0, -velocity);
-        if (direccion == "Izquierda")
-            rigidbody.velocity = new Vector3(-velocity, 0, 0);
-        if (direccion == "Derecha")
-            rigidbody.velocity = new Vector3(velocity, 0, 0);
-
-        if (pocion == "Teletransportacion") 
-        {
-            brain.BroadcastMessage("llamarCuadricula","Teletransportacion",SendMessageOptions.RequireReceiver);
-            pocion = "Nada";
-        }
+	void Update () 
+    {
+        movimiento();
+        accionPociones();
 	}
+
+    /******************************************************************************************/
+    //                              CONTROL DEMOVIMIENTO                                      //
+    /******************************************************************************************/
+
+    void movimiento()
+    {
+        if (Brain.pocion == "Nada")
+        {
+            Raycasting();
+            if (gameObject.tag == "GemaQuieta")
+                rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            if (direccion == "Arriba")
+                rigidbody.velocity = new Vector3(0, 0, velocity);
+            if (direccion == "Abajo")
+                rigidbody.velocity = new Vector3(0, 0, -velocity);
+            if (direccion == "Izquierda")
+                rigidbody.velocity = new Vector3(-velocity, 0, 0);
+            if (direccion == "Derecha")
+                rigidbody.velocity = new Vector3(velocity, 0, 0);
+        }
+    }
 
 
     /******************************************************************************************/
@@ -122,6 +131,7 @@ public class Gema : MonoBehaviour {
         return x.Length;                                           //Retorna la cantidad.
     }
 
+
     /******************************************************************************************/
     //                                  RAYCASTING                                            //
     /******************************************************************************************/
@@ -149,10 +159,51 @@ public class Gema : MonoBehaviour {
     }
 
     /******************************************************************************************/
-    //                                    Pocion                                              //
+    //                                    Pociones                                            //
     /******************************************************************************************/
-    void pocionActual(string pocion) 
+    void accionPociones() 
     {
-        this.pocion = pocion;
+        if (Brain.pocion == "Teletransportacion" || Brain.pocion == "Rotacion") 
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.transform.position, distanciaEsfera);
+            for (int i = 0; i < hitColliders.Length; i++)
+                if (hitColliders[i].tag == "Cuadricula")
+                    hitColliders[i].BroadcastMessage("finDePocion", SendMessageOptions.RequireReceiver);
+        }
     }
+
+    /******************************************************************************************/
+    //                                    Rotacion                                            //
+    /******************************************************************************************/
+
+    void rotar90() 
+    {
+        ///////////////////////////
+        //////////////////////////
+        ////////////////////////
+        ///////////////////
+        ////////////
+        /////////
+        //////
+        //
+        //
+    }
+
+    /******************************************************************************************/
+    //                                  Colisiones                                            //
+    /******************************************************************************************/
+    void OnCollisionEnter(Collision collider) 
+    {
+        if (collider.gameObject.tag == "PortalActivo")
+        {
+            collider.gameObject.BroadcastMessage("finDePocion", SendMessageOptions.RequireReceiver);
+            GameObject portalUltimo = GameObject.FindGameObjectWithTag("PortalActivo");
+            portalUltimo.gameObject.BroadcastMessage("finDePocion", SendMessageOptions.RequireReceiver);
+            this.transform.position = portalUltimo.gameObject.transform.position;
+            portalUltimo.tag = "Cuadricula";
+            pocion = "Nada";
+        }
+    }
+
+    
 }

@@ -12,7 +12,7 @@ public class Move : MonoBehaviour {
 	private RaycastHit hit;
 	private string direccion;
 	public float distancia;
-	public Cerebro brain;
+	//public Cerebro brain;
 	private bool unMovimiento;
 	public int d;
     public float velocity;

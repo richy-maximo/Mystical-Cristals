@@ -32,6 +32,7 @@ public class Gema : MonoBehaviour {
 	
 	void Update () 
     {
+        
         movimiento();
         accionPociones();
 	}
@@ -42,7 +43,7 @@ public class Gema : MonoBehaviour {
 
     void movimiento()
     {
-        if (Brain.pocion == "Nada")
+        if (Brain.moverGemas == true)
         {
             Raycasting();
             if (gameObject.tag == "GemaQuieta")
@@ -70,7 +71,7 @@ public class Gema : MonoBehaviour {
     }
     void OnMouseUp()
     {
-        if (gameObject.tag == "GemaQuieta")
+        if (gameObject.tag == "GemaQuieta" && Brain.pocion == "Nada")
         {
             mousefinx = Input.mousePosition.x;
             mousefiny = Input.mousePosition.y;
@@ -170,23 +171,6 @@ public class Gema : MonoBehaviour {
                 if (hitColliders[i].tag == "Cuadricula")
                     hitColliders[i].BroadcastMessage("finDePocion", SendMessageOptions.RequireReceiver);
         }
-    }
-
-    /******************************************************************************************/
-    //                                    Rotacion                                            //
-    /******************************************************************************************/
-
-    void rotar90() 
-    {
-        ///////////////////////////
-        //////////////////////////
-        ////////////////////////
-        ///////////////////
-        ////////////
-        /////////
-        //////
-        //
-        //
     }
 
     /******************************************************************************************/

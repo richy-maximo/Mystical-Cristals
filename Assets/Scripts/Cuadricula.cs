@@ -16,6 +16,7 @@ public class Cuadricula : MonoBehaviour {
 
     void Update() 
     {
+        
         if (Brain.pocion == "Nada" && this.gameObject.tag == "Cuadricula")
             finDePocion();
 
@@ -29,6 +30,7 @@ public class Cuadricula : MonoBehaviour {
                 llamaA("Cuadricula", "finDePocion");
                 Brain.pocion = "Nada";
                 Brain.portales = 0;
+                Brain.moverGemas = true;
             }
         }
 
@@ -36,7 +38,6 @@ public class Cuadricula : MonoBehaviour {
         {
             this.gameObject.renderer.enabled = true;
             this.collider.enabled = true;
-
         }
     }
 
@@ -56,6 +57,7 @@ public class Cuadricula : MonoBehaviour {
             roca.transform.Rotate(-90, 0, 0);
             finDePocion();
             Brain.pocion = "Nada";
+            Brain.moverGemas = true;
         }
     }
 

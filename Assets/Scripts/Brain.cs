@@ -6,6 +6,7 @@ public class Brain : MonoBehaviour {
     public static int portales = 0;
     public static int unidadTeletransportador = 3;
     public static int unidadRotacion = 3;
+    public static bool moverGemas = true;
 
 
 	void Start () {
@@ -13,6 +14,7 @@ public class Brain : MonoBehaviour {
 	}
 	
 	void Update () {
+        
 	}
 
     public void llamarCuadricula(string pocion) 

@@ -14,6 +14,7 @@ public class Buttons : MonoBehaviour {
 	}
 
 	void Update () {
+        
 		Contador ();
 	}
 
@@ -29,12 +30,14 @@ public class Buttons : MonoBehaviour {
         {
             Brain.unidadTeletransportador--;
             Brain.pocion = "Teletransportacion";
+            Brain.moverGemas = false;
         }
 
         if (this.name == "RotacionImagen" && validationGema.Length == 0 && Brain.unidadRotacion > 0)
         {
             Brain.unidadRotacion--;
             Brain.pocion = "Rotacion";
+            Brain.moverGemas = false;
         }
     }
 

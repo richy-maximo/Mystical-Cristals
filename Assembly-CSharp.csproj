@@ -51,7 +51,7 @@
      <Compile Include="Assets\Scripts Antiguos\Enemigo.cs" />
      <Compile Include="Assets\Scripts Antiguos\Move.cs" />
      <Compile Include="Assets\Scripts Antiguos\Piedra.cs" />
-     <Compile Include="Assets\Scripts Antiguos\SphereCast.cs" />
+     <Compile Include="Assets\Scripts Antiguos\PiedraMagica.cs" />
      <Compile Include="Assets\Scripts Antiguos\UtilidadesHagi.cs" />
      <Compile Include="Assets\Scripts\Brain.cs" />
      <Compile Include="Assets\Scripts\Buttons.cs" />

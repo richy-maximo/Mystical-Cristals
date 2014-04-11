@@ -15,13 +15,15 @@ public class Cuadriculas : MonoBehaviour {
 
 	void Update () {
 		if (pocion == "Nada" || this.gameObject.tag == "Cuadricula") {
-			this.gameObject.collider.enabled = false;
+            Brain.moverGemas = true;
+            this.gameObject.collider.enabled = false;
 			this.gameObject.collider.isTrigger = false;
 			this.gameObject.renderer.enabled = false;
 			this.gameObject.renderer.material.mainTexture = texturaa [0];
 		}
 		if (pocion == "Teletransportacion") {
-			GameObject[] portal = GameObject.FindGameObjectsWithTag("PortalActivo");
+            Brain.moverGemas = false;
+            GameObject[] portal = GameObject.FindGameObjectsWithTag("PortalActivo");
 			if(portal.Length == 2 && this.gameObject.tag == "GemaEnMovimiento"){
 				this.gameObject.tag = "Cuadricula";
 				pocion = "Nada";

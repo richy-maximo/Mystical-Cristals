@@ -30,7 +30,7 @@ public class Gema : MonoBehaviour {
         pocion = "Nada";
 	}
 	
-	void Update () 
+	void FixedUpdate () 
     {
         
         movimiento();
@@ -48,10 +48,10 @@ public class Gema : MonoBehaviour {
             Raycasting();
             if (gameObject.tag == "GemaQuieta")
                 rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            if (direccion == "Arriba")
-                rigidbody.velocity = new Vector3(0, 0, velocity);
+             if (direccion == "Arriba")
+                rigidbody.velocity = new Vector3(0, 0, velocity) ;
             if (direccion == "Abajo")
-                rigidbody.velocity = new Vector3(0, 0, -velocity);
+                rigidbody.velocity = new Vector3(0, 0, -velocity) ;
             if (direccion == "Izquierda")
                 rigidbody.velocity = new Vector3(-velocity, 0, 0);
             if (direccion == "Derecha")
@@ -109,7 +109,8 @@ public class Gema : MonoBehaviour {
                         direccion = "Abajo";
                     else direccion = "Nada";
             }
-            if (validation() == 0 && direccion != "Nada")
+            //if (validation() == 0 && direccion != "Nada")
+            if (direccion != "Nada")
             {
                 gameObject.tag = "GemaEnMovimiento";
                 rigidbody.constraints = RigidbodyConstraints.None;
@@ -132,7 +133,7 @@ public class Gema : MonoBehaviour {
         return x.Length;                                           //Retorna la cantidad.
     }
 
-
+    
     /******************************************************************************************/
     //                                  RAYCASTING                                            //
     /******************************************************************************************/
@@ -143,22 +144,33 @@ public class Gema : MonoBehaviour {
 		Debug.DrawRay(transform.position, Vector3.left, Color.green);
 
         if (Physics.Raycast(transform.position, -Vector3.back, out hit, distancia))
-            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Arriba")
+            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra" || hit.collider.gameObject.tag == "PiedraMagica") && direccion == "Arriba")
                 gameObject.tag = "GemaQuieta";
         
         if (Physics.Raycast(transform.position, Vector3.back, out hit, distancia))
-            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Abajo")
+            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra" || hit.collider.gameObject.tag == "PiedraMagica") && direccion == "Abajo")
                 gameObject.tag = "GemaQuieta";
         
         if (Physics.Raycast(transform.position, Vector3.left, out hit, distancia))
-            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Izquierda")
+            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra" || hit.collider.gameObject.tag == "PiedraMagica") && direccion == "Izquierda")
                 gameObject.tag = "GemaQuieta";
         
         if (Physics.Raycast(transform.position, Vector3.right, out hit, distancia))
-            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra") && direccion == "Derecha")
+            if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra" || hit.collider.gameObject.tag == "PiedraMagica") && direccion == "Derecha")
                 gameObject.tag = "GemaQuieta";					
     }
+    
 
+    /*void OnCollisionEnter(Collision hit) 
+    {
+
+        if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra" || hit.collider.gameObject.tag == "PiedraMagica"))
+        {
+            gameObject.tag = "GemaQuieta";
+            Debug.Log("#");
+        }
+    
+    }*/
     /******************************************************************************************/
     //                                    Pociones                                            //
     /******************************************************************************************/
@@ -176,7 +188,7 @@ public class Gema : MonoBehaviour {
     /******************************************************************************************/
     //                                  Colisiones                                            //
     /******************************************************************************************/
-    void OnCollisionEnter(Collision collider) 
+    /*void OnCollisionEnter(Collision collider) 
     {
         if (collider.gameObject.tag == "PortalActivo")
         {
@@ -187,7 +199,7 @@ public class Gema : MonoBehaviour {
             portalUltimo.tag = "Cuadricula";
             pocion = "Nada";
         }
-    }
+    }*/
 
     
 }

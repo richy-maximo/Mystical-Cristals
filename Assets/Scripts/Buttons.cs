@@ -29,14 +29,14 @@ public class Buttons : MonoBehaviour {
         if (this.name == "TeletrasportacionImagen" && validationGema.Length == 0 && validationTeletransportador.Length == 0 && Brain.unidadTeletransportador > 0)
         {
             Brain.unidadTeletransportador--;
-            Brain.pocion = "Teletransportacion";
+            Brain.ESTADO = "Teletransportacion";
             Brain.moverGemas = false;
         }
 
         if (this.name == "RotacionImagen" && validationGema.Length == 0 && Brain.unidadRotacion > 0)
         {
             Brain.unidadRotacion--;
-            Brain.pocion = "Rotacion";
+            Brain.ESTADO = "Rotacion";
             Brain.moverGemas = false;
         }
     }

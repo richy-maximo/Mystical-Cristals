@@ -18,8 +18,6 @@ public class Gema : MonoBehaviour {
     private RaycastHit hit;
     public float distancia;
 
-    //Variables de estado.
-    public string pocion;
 
     //Variable para OverlapSphere
     public float distanciaEsfera;
@@ -27,12 +25,11 @@ public class Gema : MonoBehaviour {
 
 
 	void Start () {
-        pocion = "Nada";
 	}
 	
 	void FixedUpdate () 
     {
-        
+        Debug.Log(Brain.ESTADO);
         movimiento();
         accionPociones();
 	}
@@ -71,7 +68,7 @@ public class Gema : MonoBehaviour {
     }
     void OnMouseUp()
     {
-        if (gameObject.tag == "GemaQuieta" && Brain.pocion == "Nada")
+        if (gameObject.tag == "GemaQuieta" && Brain.ESTADO == "Nada")
         {
             mousefinx = Input.mousePosition.x;
             mousefiny = Input.mousePosition.y;
@@ -176,19 +173,20 @@ public class Gema : MonoBehaviour {
     /******************************************************************************************/
     void accionPociones() 
     {
-        if (Brain.pocion == "Teletransportacion" || Brain.pocion == "Rotacion") 
+        if (Brain.ESTADO == "Teletransportacion" || Brain.ESTADO == "Rotacion") 
         {
             Collider[] hitColliders = Physics.OverlapSphere(this.gameObject.transform.position, distanciaEsfera);
             for (int i = 0; i < hitColliders.Length; i++)
                 if (hitColliders[i].tag == "Cuadricula")
                     hitColliders[i].BroadcastMessage("finDePocion", SendMessageOptions.RequireReceiver);
+            Debug.Log("ddd");
         }
     }
 
     /******************************************************************************************/
     //                                  Colisiones                                            //
     /******************************************************************************************/
-    /*void OnCollisionEnter(Collision collider) 
+    void OnCollisionEnter(Collision collider) 
     {
         if (collider.gameObject.tag == "PortalActivo")
         {
@@ -197,9 +195,9 @@ public class Gema : MonoBehaviour {
             portalUltimo.gameObject.BroadcastMessage("finDePocion", SendMessageOptions.RequireReceiver);
             this.transform.position = portalUltimo.gameObject.transform.position;
             portalUltimo.tag = "Cuadricula";
-            pocion = "Nada";
+            Brain.ESTADO = "Nada";
         }
-    }*/
+    }
 
     
 }

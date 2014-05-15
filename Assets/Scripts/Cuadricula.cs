@@ -17,10 +17,10 @@ public class Cuadricula : MonoBehaviour {
     void Update() 
     {
         
-        if (Brain.pocion == "Nada" && this.gameObject.tag == "Cuadricula")
+        if (Brain.ESTADO == "Nada" && this.gameObject.tag == "Cuadricula")
             finDePocion();
 
-        if (Brain.pocion == "Teletransportacion")
+        if (Brain.ESTADO == "Teletransportacion")
         {
             this.gameObject.renderer.enabled = true;
             this.collider.enabled = true;
@@ -28,13 +28,13 @@ public class Cuadricula : MonoBehaviour {
             if (portales.Length == 2)
             {
                 llamaA("Cuadricula", "finDePocion");
-                Brain.pocion = "Nada";
+                Brain.ESTADO = "Nada";
                 Brain.portales = 0;
                 Brain.moverGemas = true;
             }
         }
 
-        if (Brain.pocion == "Rotacion")
+        if (Brain.ESTADO == "Rotacion")
         {
             this.gameObject.renderer.enabled = true;
             this.collider.enabled = true;
@@ -44,19 +44,19 @@ public class Cuadricula : MonoBehaviour {
 
     void OnMouseDown() 
     {
-        if (Brain.pocion == "Teletransportacion" && Brain.portales < 2) 
+        if (Brain.ESTADO == "Teletransportacion" && Brain.portales < 2) 
         {
                 this.gameObject.renderer.material.mainTexture = textura[1];
                 this.tag = "PortalActivo";
         }
 
-        if (Brain.pocion == "Rotacion")
+        if (Brain.ESTADO == "Rotacion")
         {
             this.gameObject.renderer.material.mainTexture = textura[1];
             GameObject roca = Instantiate(prefab, new Vector3(this.transform.position.x, this.transform.position.y - .2f, this.transform.position.z), Quaternion.identity) as GameObject;
             roca.transform.Rotate(-90, 0, 0);
             finDePocion();
-            Brain.pocion = "Nada";
+            Brain.ESTADO = "Nada";
             Brain.moverGemas = true;
         }
     }

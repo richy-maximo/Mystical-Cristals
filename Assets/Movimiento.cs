@@ -16,18 +16,12 @@ public class Movimiento : MonoBehaviour {
     private RaycastHit hit;
     public float distancia;
 
-
-	void Start () {
-
-	}
-
-
     void FixedUpdate()
     {
-        Raycasting();
-        if (gameObject.tag == "GemaQuieta")
+        Raycasting();                                               //Genera el Raycast para la gema.
+        if (gameObject.tag == "GemaQuieta")                         //En caso de que tenga el Tag de GemaQuieta se congela por completo sus movimientos.
             rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        if (direccion == "Arriba")
+        if (direccion == "Arriba")                                  //Dependiendo de la dirección dada por OnMouseDown genera la velocidad en esa dirección.                      
             rigidbody.velocity = new Vector3(0, 0, velocity);
         if (direccion == "Abajo")
             rigidbody.velocity = new Vector3(0, 0, -velocity);
@@ -105,33 +99,13 @@ public class Movimiento : MonoBehaviour {
     /******************************************************************************************/
     void Raycasting()
     {
+        //Dibuja los rayos en la dirección del raycast dado.
         Debug.DrawRay(transform.position, -Vector3.back, Color.green);
         Debug.DrawRay(transform.position, Vector3.back, Color.green);
         Debug.DrawRay(transform.position, Vector3.right, Color.green);
         Debug.DrawRay(transform.position, Vector3.left, Color.green);
 
-        /*
-        if (Physics.Raycast(transform.position, -Vector3.back, distancia, 1 << LayerMask.NameToLayer("Pared")) && direccion == "Arriba")
-        {
-            gameObject.tag = "GemaQuieta";
-            direccion = "Nada";
-        }
-        if (Physics.Raycast(transform.position, Vector3.back, distancia, 1 << LayerMask.NameToLayer("Pared")) && direccion == "Abajo")
-        {
-            gameObject.tag = "GemaQuieta";
-            direccion = "Nada";
-        }
-        if (Physics.Raycast(transform.position, Vector3.left, distancia, 1 << LayerMask.NameToLayer("Pared")) && direccion == "Izquierda")
-        {
-            gameObject.tag = "GemaQuieta";
-            direccion = "Nada";
-        }
-        if (Physics.Raycast(transform.position, Vector3.right, distancia, 1 << LayerMask.NameToLayer("Pared")) && direccion == "Derecha")
-        {
-            gameObject.tag = "GemaQuieta";
-            direccion = "Nada";
-        }*/
-
+        //Detecta las colisiones en el sentido dado y si se activa cambia el tag de la gema y modifica su dirección.
         if (Physics.Raycast(transform.position, -Vector3.back, out hit, distancia))
             if ((hit.collider.gameObject.name == "Enemigo" || hit.collider.gameObject.tag == "Pared" || hit.collider.gameObject.tag == "GemaQuieta" || hit.collider.gameObject.tag == "Piedra" || hit.collider.gameObject.tag == "PiedraMagica") && direccion == "Arriba")
             {
@@ -158,4 +132,20 @@ public class Movimiento : MonoBehaviour {
             }
     }
     
+
+    /****************************************/
+    //              COLISIONES              //
+    /****************************************/
+
+    void OnCollisionEnter(Collision other) 
+    {
+        if (other.gameObject.tag == "PortalActivo")                 //Si choca con algún portal activo.
+        {
+            other.gameObject.tag = "Cuadricula";                    //Cambia su tag a Cuadricula para que se desaparezca solo.
+            GameObject ultimoPortal = GameObject.FindGameObjectWithTag("PortalActivo");     //Encuentra el portal restante.
+            this.transform.position = ultimoPortal.transform.position;      //Intercambien posiciones.
+            Brain.portalesActivos = 0;                              //Reestablece valores para la siguiente vez de la posción.
+            //NOTA EL ERROR PRODUCIDO EN EJECUCIÓN NO AFECTA EL JUEGO.
+        }
+    }
 }

@@ -46,9 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Click Contador Pociones.cs" />
-     <Compile Include="Assets\Contador Pociones.cs" />
+     <Compile Include="Assets\ActionButton.cs" />
+     <Compile Include="Assets\ClickButton.cs" />
+     <Compile Include="Assets\Contadores.cs" />
+     <Compile Include="Assets\Cuadricula.cs" />
      <Compile Include="Assets\Movimiento.cs" />
+     <Compile Include="Assets\PiedraMagica.cs" />
      <Compile Include="Assets\Scripts Antiguos\Buttons.cs" />
      <Compile Include="Assets\Scripts Antiguos\Cuadriculas.cs" />
      <Compile Include="Assets\Scripts Antiguos\Enemigo.cs" />
@@ -59,9 +62,9 @@
      <Compile Include="Assets\Scripts\Brain.cs" />
      <Compile Include="Assets\Scripts\Buttons.cs" />
      <Compile Include="Assets\Scripts\Cerebro.cs" />
-     <Compile Include="Assets\Scripts\Cuadricula.cs" />
+     <Compile Include="Assets\Scripts\Cuadriculaa.cs" />
      <Compile Include="Assets\Scripts\Gema.cs" />
-     <Compile Include="Assets\Scripts\PiedraMagica.cs" />
+     <Compile Include="Assets\Scripts\PiedraMagicaaaa.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

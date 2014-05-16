@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PiedraMagica : MonoBehaviour {
+public class PiedraMagicaaa : MonoBehaviour {
     RaycastHit hit;
     string estado = "Nada";
     public float dis;

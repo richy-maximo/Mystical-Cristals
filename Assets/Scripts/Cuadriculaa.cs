@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Cuadricula : MonoBehaviour {
+public class Cuadriculaa : MonoBehaviour {
 
     //Variables de Generales.
     public Texture2D[] textura = new Texture2D[2];

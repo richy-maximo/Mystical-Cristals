@@ -44,6 +44,19 @@ public class Cuadricula : MonoBehaviour
             roca.transform.Rotate(-90, 0, 0);
             Brain.ESTADO = "Nada";
         }
+        
+        if (Brain.ESTADO == "Un Movimiento")
+        {
+            bool okcambia = true;
+            Collider[] gemas = Physics.OverlapSphere(this.gameObject.transform.position, 1.5f);     
+            for (int i = 0; i < gemas.Length; i++)
+                if (gemas[i].tag == "GemaQuieta" && okcambia)
+                {
+                    gemas[i].BroadcastMessage("UnMovimiento", this.gameObject.transform.position, SendMessageOptions.DontRequireReceiver);
+                    okcambia = false;
+                }
+            Brain.ESTADO = "Nada";
+        }
     }
 
 
@@ -60,11 +73,19 @@ public class Cuadricula : MonoBehaviour
                 Desactivar();
     }
 
+
     void Desactivar()
     {
         //Regresa la cuadricula a su estado orginal.
+        this.gameObject.tag = "Cuadricula";
         this.gameObject.renderer.enabled = false;
         this.gameObject.collider.enabled = false;
         this.gameObject.renderer.material.mainTexture = textura[0];
+    }
+
+    //Activa unicamente los collider.
+    void ActivarCollider() 
+    {
+        this.gameObject.collider.enabled = true;
     }
 }

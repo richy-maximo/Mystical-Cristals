@@ -23,10 +23,14 @@ public class Contadores : MonoBehaviour {
     //Texturas
     public Texture2D[] textura = new Texture2D[10];
 
+    //Pocion de Tiempo
+   
+
     void Start()
     {
         cantidadMovimiento = 0;             //Establece en 0 los movimientos al cargar la escena.
         continuaContando = true;            //Permite un aumento en 1 del contador y no lo que dura un cuadro.
+        Brain.continuarTiempo = true;
     }
 
     //Muestra los contadores que están activos.
@@ -72,9 +76,18 @@ public class Contadores : MonoBehaviour {
 
     void ContadorTiempo()
     {
-        //Mantiene el conteo del tiempo pero a la inversa para hacer una cuenta regresiva.
-        cantidadTiempo = 360 - (int)Time.timeSinceLevelLoad;
+        if (Brain.continuarTiempo && Brain.ESTADO != "Tiempo")
+            cantidadTiempo = 360 - (int)Time.timeSinceLevelLoad;    //Mantiene el conteo del tiempo pero a la inversa para hacer una cuenta regresiva.
 
+        if (Brain.pocion1Tiempo && Brain.ESTADO == "Nada")
+            cantidadTiempo = 360 - (int)Time.timeSinceLevelLoad + 10;       //Cuenta el tiempo pero agregando el tiempo "perdido" de la primera posción de tiempo.
+        
+        if (Brain.pocion2Tiempo && Brain.ESTADO == "Nada")
+            cantidadTiempo = 360 - (int)Time.timeSinceLevelLoad + 20;       //Cuenta el tiempo pero agregando el tiempo "perdido" de la segunda posción de tiempo.
+        
+        if (Brain.pocion3Tiempo && Brain.ESTADO == "Nada")
+            cantidadTiempo = 360 - (int)Time.timeSinceLevelLoad + 30;       //Cuenta el tiempo pero agregando el tiempo "perdido" de la tercera posción de tiempo.
+        
         //Establece los parámetros de la centena, decena y la unidad.
         centenaTiempo = cantidadTiempo / 100;
         decenaTiempo = (cantidadTiempo / 10) - (centenaTiempo * 10);
@@ -97,5 +110,8 @@ public class Contadores : MonoBehaviour {
             if (cantidadTiempo >= 0) gameObject.renderer.material.mainTexture = textura[Brain.numeroTiempo];
             if (cantidadTiempo == 0) Brain.ESTADO = "Game Over";                //Si el tiempo termina cambia el estado del juego.
         }
+
     }
+
+    
 }

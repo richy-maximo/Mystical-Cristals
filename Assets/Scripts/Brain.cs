@@ -22,7 +22,11 @@ public class Brain : MonoBehaviour {
         //Teletransportacion.
     public static int portalesActivos;
 
-
+        //Tiempo
+    public static bool continuarTiempo;
+    public static bool pocion1Tiempo;
+    public static bool pocion2Tiempo;
+    public static bool pocion3Tiempo;
 
     public static int portales = 0;
     public static int unidadTeletransportador = 3;
@@ -39,22 +43,25 @@ public class Brain : MonoBehaviour {
         aPunto = 3;
         destruye = 3;
         portalesActivos = 0;
+        continuarTiempo = true;
+        pocion1Tiempo = false;
+        pocion2Tiempo = false;
+        pocion3Tiempo = false;
 	}
 	
 	void Update () {
         Debug.Log("Estado del Juego : " + ESTADO);
         if (ESTADO == "Teletransportacion" || ESTADO == "Rotacion")     //En caso de llamar a estas pociones se activa la cuadricula.
-            llamarCuadricula();
+            llamarCuadricula("Activar");
 	}
 
 
-    public void llamarCuadricula() 
+    public void llamarCuadricula(string funcion) 
     {
         GameObject[] cuadricula = GameObject.FindGameObjectsWithTag("Cuadricula");      //Busca los objetos con tag Cuadricula.
         for (int i = 0; i < cuadricula.Length; i++)
-            cuadricula[i].BroadcastMessage("Activar",SendMessageOptions.RequireReceiver);   //Los manda actiar a todos.
+            cuadricula[i].BroadcastMessage(funcion,SendMessageOptions.RequireReceiver);   //Los manda actiar a todos.
     }
-
-    
+   
 }
 

@@ -29,6 +29,26 @@ public class Movimiento : MonoBehaviour {
             rigidbody.velocity = new Vector3(-velocity, 0, 0);
         if (direccion == "Derecha")
             rigidbody.velocity = new Vector3(velocity, 0, 0);
+
+        if (Brain.ESTADO == "Un Movimiento")                        //En caso de activarse la poción de movimiento...
+        {
+            Collider[] circulo = Physics.OverlapSphere(this.gameObject.transform.position, 1.5f);   //Detecta la cuadricula a su alrededor que ya tiene el collider activado.
+            
+            //Les cambia el tag a los que están en el área.
+            for (int i = 0; i < circulo.Length; i++)
+                if (circulo[i].gameObject.tag == "Cuadricula")
+                    circulo[i].gameObject.tag = "Punto";
+
+            //Les dice que se activen los que están alrededor.
+            for (int i = 0; i < circulo.Length; i++)
+                if (circulo[i].gameObject.tag == "Punto")
+                    circulo[i].BroadcastMessage("Activar", SendMessageOptions.DontRequireReceiver);
+            
+            //Descativa todos los que no sean necesarios.
+            for (int i = 0; i < circulo.Length; i++)
+                if (circulo[i].gameObject.tag == "Cuadricula")
+                    circulo[i].BroadcastMessage("Desactivar", SendMessageOptions.RequireReceiver);
+        }
     }
 
     /******************************************************************************************/
@@ -42,7 +62,7 @@ public class Movimiento : MonoBehaviour {
     }
     void OnMouseUp()
     {
-        if (gameObject.tag == "GemaQuieta" && Brain.ESTADO == "Nada")
+        if (gameObject.tag == "GemaQuieta" && (Brain.ESTADO == "Nada" || Brain.ESTADO == "Tiempo"))
         {
             mousefinx = Input.mousePosition.x;
             mousefiny = Input.mousePosition.y;
@@ -147,5 +167,20 @@ public class Movimiento : MonoBehaviour {
             Brain.portalesActivos = 0;                              //Reestablece valores para la siguiente vez de la posción.
             //NOTA EL ERROR PRODUCIDO EN EJECUCIÓN NO AFECTA EL JUEGO.
         }
+    }
+
+
+    /****************************************/
+    //            UN MOVIMIENTO             //
+    /****************************************/
+
+    void UnMovimiento(Vector3 posicion)
+    {
+        this.gameObject.transform.position = posicion;      //Intercambia la posición con el punto dado.
+
+        GameObject[] puntos = GameObject.FindGameObjectsWithTag("Punto");   //Busca todos los que se llamen punto para desactivarlos.
+        for (int i = 0; i < puntos.Length; i++)
+            if(puntos[i].tag == "Punto")
+                puntos[i].BroadcastMessage("Desactivar", SendMessageOptions.DontRequireReceiver);
     }
 }

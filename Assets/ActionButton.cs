@@ -24,7 +24,6 @@ public class ActionButton : MonoBehaviour {
             gameObject.renderer.material.shader = Shader.Find("Unlit/Texture");
             gameObject.renderer.material.mainTexture = textura[Brain.rotacion];
         }
-        /*
         if (tiempo)
         {
             gameObject.renderer.material.shader = Shader.Find("Unlit/Texture");
@@ -35,6 +34,7 @@ public class ActionButton : MonoBehaviour {
             gameObject.renderer.material.shader = Shader.Find("Unlit/Texture");
             gameObject.renderer.material.mainTexture = textura[Brain.unMovimiento];
         }
+        /*
         if (aPunto)
         {
             gameObject.renderer.material.shader = Shader.Find("Unlit/Texture");

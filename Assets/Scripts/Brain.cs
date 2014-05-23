@@ -47,6 +47,7 @@ public class Brain : MonoBehaviour {
         pocion1Tiempo = false;
         pocion2Tiempo = false;
         pocion3Tiempo = false;
+		Debug.Log("HOLA HAGI");
 	}
 	
 	void Update () {
